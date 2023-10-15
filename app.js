@@ -1,7 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
 const dotenv = require('dotenv');
-// const jwt = require('jsonwebtoken'); 
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -40,8 +39,9 @@ app.use(session({
 }));
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// TODO: To step out vercel deploy
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
