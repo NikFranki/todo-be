@@ -1,5 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
+const dotenv = require('dotenv');
+// const jwt = require('jsonwebtoken'); 
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -11,12 +13,16 @@ const error = require('./lib/middleware/error');
 
 const rmUnusedImages = require('./lib/middleware/rm_unused_images');
 
+const authVerify = require('./lib/middleware/authVerify');
+
 const entriesRouter = require('./routes/entries');
 const userRouter = require('./routes/user');
 const emailRouter = require('./routes/email');
 const foldersRouter = require('./routes/folders');
 
 const app = express();
+
+dotenv.config();
 
 app.set('serverPath', 'http://localhost:8000/images/');
 app.set('imagesPath', path.join(__dirname, '/public/images/'));
@@ -27,7 +33,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 1, // 1 小时过期
+    maxAge: 365 * 24 * 60 * 60 * 1000,
+    secure: false,
   },
   rolling: true,
 }));
@@ -42,12 +49,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8080', 'http://franki.sevenyuan.cn'],
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8080'],
   credentials: true,
 }));
 
 // rm unused images in public folder
 app.use(rmUnusedImages);
+
+// auth verrify
+const WHITELIST_URLs = [
+  '/user/register',
+  '/user/login',
+  '/user/logout',
+];
+app.use('*', (req, res, next) => {
+  if (WHITELIST_URLs.includes(req.originalUrl)) {
+    next();
+  } else {
+    authVerify.validateToken(req, res, next);
+  }
+});
 
 app.use('/', entriesRouter);
 app.use('/user', userRouter);
