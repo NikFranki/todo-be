@@ -18,6 +18,7 @@ const entriesRouter = require('./routes/entries');
 const userRouter = require('./routes/user');
 const emailRouter = require('./routes/email');
 const foldersRouter = require('./routes/folders');
+const tokenValidateRouter = require('./routes/token-validate');
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use(rmUnusedImages);
 
 // auth verrify
 const WHITELIST_URLs = [
+  '/jwt/tokenValidate',
   '/user/register',
   '/user/login',
   '/user/logout',
@@ -74,6 +76,7 @@ app.use('/', entriesRouter);
 app.use('/user', userRouter);
 app.use('/email', emailRouter);
 app.use('/folders', foldersRouter);
+app.use('/jwt', tokenValidateRouter);
 
 app.use(notfound);
 app.use(error);
