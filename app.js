@@ -15,9 +15,11 @@ const rmUnusedImages = require('./lib/middleware/rm_unused_images');
 const authVerify = require('./lib/middleware/authVerify');
 
 const entriesRouter = require('./routes/entries');
+const todoRouter = require('./routes/todo');
 const userRouter = require('./routes/user');
 const emailRouter = require('./routes/email');
-const foldersRouter = require('./routes/folders');
+// const foldersRouter = require('./routes/folders');
+const listRouter = require('./routes/list');
 const tokenValidateRouter = require('./routes/token-validate');
 
 const app = express();
@@ -57,6 +59,7 @@ app.use(cors({
 // rm unused images in public folder
 app.use(rmUnusedImages);
 
+// TODO: temporarily remove
 // auth verrify
 const WHITELIST_URLs = [
   '/jwt/tokenValidate',
@@ -73,9 +76,11 @@ app.use('*', (req, res, next) => {
 });
 
 app.use('/', entriesRouter);
+app.use('/todo', todoRouter);
 app.use('/user', userRouter);
 app.use('/email', emailRouter);
-app.use('/folders', foldersRouter);
+// app.use('/folders', foldersRouter);
+app.use('/list', listRouter);
 app.use('/jwt', tokenValidateRouter);
 
 app.use(notfound);
