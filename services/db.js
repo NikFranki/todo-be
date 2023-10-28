@@ -13,11 +13,13 @@ conn.query(
   'CREATE TABLE IF NOT EXISTS todo (' +
   'id VARCHAR(40) NOT NULL, ' +
   'content VARCHAR(512) NOT NULL, ' +
-  'status INT(10) NOT NULL, ' +
   'list_id INT NOT NULL, ' +
+  'added_my_day TINYINT(1) NOT NULL, ' +
+  'marked_as_important TINYINT(1) NOT NULL, ' +
+  'marked_as_completed TINYINT(1) NOT NULL, ' +
+  'due_date Date, ' +
   'note VARCHAR(512), ' +
   'category INT(10), ' +
-  'date Date, ' +
   '`create_time` datetime DEFAULT CURRENT_TIMESTAMP, ' +
   '`update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ' +
   'PRIMARY KEY(id))',
