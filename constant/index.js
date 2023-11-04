@@ -17,11 +17,11 @@ const DEFAULT_LIST_IDS = [
   IMPORTANT, // Important
   PLANNED, // Planned
   ASSIGNED_TO_ME, // Assigned to me
-  TASKS, // Tasks
 ];
 
 const ADDED_MY_DAY = 1;
 const MARKED_AS_IMPORTANT = 1;
+const MARKED_AS_UNCOMPLETED = 0;
 
 module.exports = {
   DEFAULT_LIST_NAMES,
@@ -32,5 +32,6 @@ module.exports = {
   TASKS,
   DEFAULT_LIST_IDS,
   MARKED_AS_IMPORTANT,
+  MARKED_AS_UNCOMPLETED,
   ADDED_MY_DAY,
 };
