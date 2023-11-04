@@ -1,11 +1,10 @@
 const mysql = require('mysql');
 
-// TODO: process.env.DB_HOST can't get the value at the beginning
 const conn = mysql.createConnection({
-  host: process.env.DB_HOST || '127.0.0.1',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '1234567890',
-  database: process.env.DB_NAME || 'todo',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 /* table todo */

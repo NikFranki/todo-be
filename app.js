@@ -7,6 +7,8 @@ const logger = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
 
+dotenv.config();
+
 const notfound = require('./lib/middleware/notfound');
 const error = require('./lib/middleware/error');
 
@@ -23,8 +25,6 @@ const listRouter = require('./routes/list');
 const tokenValidateRouter = require('./routes/token-validate');
 
 const app = express();
-
-dotenv.config();
 
 app.set('serverPath', 'http://localhost:8000/images/');
 app.set('imagesPath', path.join(__dirname, '/public/images/'));
@@ -54,7 +54,6 @@ app.use(cors({
 // rm unused images in public folder
 app.use(rmUnusedImages);
 
-// TODO: temporarily remove
 // auth verrify
 const WHITELIST_URLs = [
   '/jwt/tokenValidate',
