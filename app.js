@@ -37,6 +37,8 @@ app.use(session({
   cookie: {
     maxAge: 365 * 24 * 60 * 60 * 1000,
     secure: false,
+    httpOnly: true,
+    sameSite: 'strict',
   },
   rolling: true,
 }));
@@ -46,8 +48,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+const allowedOrigins = ['http://localhost:3366', 'http://franki.com', 'http://franki.com:3366'];
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8080'],
+  origin: allowedOrigins,
   credentials: true,
 }));
 
