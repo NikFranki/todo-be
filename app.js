@@ -20,7 +20,6 @@ const entriesRouter = require('./routes/entries');
 const todoRouter = require('./routes/todo');
 const userRouter = require('./routes/user');
 const emailRouter = require('./routes/email');
-// const foldersRouter = require('./routes/folders');
 const listRouter = require('./routes/list');
 const tokenValidateRouter = require('./routes/token-validate');
 
@@ -76,7 +75,6 @@ app.use('/', entriesRouter);
 app.use('/todo', todoRouter);
 app.use('/user', userRouter);
 app.use('/email', emailRouter);
-// app.use('/folders', foldersRouter);
 app.use('/list', listRouter);
 app.use('/jwt', tokenValidateRouter);
 
