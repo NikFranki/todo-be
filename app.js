@@ -17,6 +17,7 @@ const rmUnusedImages = require('./lib/middleware/rm_unused_images');
 const authVerify = require('./lib/middleware/authVerify');
 
 const todoRouter = require('./routes/todo');
+const subtaskRouter = require('./routes/subtask');
 const userRouter = require('./routes/user');
 const emailRouter = require('./routes/email');
 const listRouter = require('./routes/list');
@@ -71,6 +72,7 @@ app.use('*', (req, res, next) => {
 });
 
 app.use('/todo', todoRouter);
+app.use('/subtask', subtaskRouter);
 app.use('/user', userRouter);
 app.use('/email', emailRouter);
 app.use('/list', listRouter);

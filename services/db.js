@@ -7,6 +7,15 @@ const conn = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
+/* table user */
+conn.query(
+  'CREATE TABLE IF NOT EXISTS user (' +
+  'username VARCHAR(60) NOT NULL, ' +
+  'password VARCHAR(100) NOT NULL, ' +
+  'avatar VARCHAR(512), ' +
+  'PRIMARY KEY(username))',
+);
+
 /* table todo */
 conn.query(
   'CREATE TABLE IF NOT EXISTS todo (' +
@@ -24,13 +33,16 @@ conn.query(
   'PRIMARY KEY(id))',
 );
 
-/* table user */
+/* table sub task */
 conn.query(
-  'CREATE TABLE IF NOT EXISTS user (' +
-  'username VARCHAR(60) NOT NULL, ' +
-  'password VARCHAR(100) NOT NULL, ' +
-  'avatar VARCHAR(512), ' +
-  'PRIMARY KEY(username))',
+  'CREATE TABLE IF NOT EXISTS subtask (' +
+  'id INT UNSIGNED NOT NULL AUTO_INCREMENT, ' +
+  'content VARCHAR(512) NOT NULL, ' +
+  'todo_id VARCHAR(40) NOT NULL, ' +
+  'marked_as_completed TINYINT(1) NOT NULL, ' +
+  '`create_time` datetime DEFAULT CURRENT_TIMESTAMP, ' +
+  '`update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ' +
+  'PRIMARY KEY(id))',
 );
 
 /* table list */
