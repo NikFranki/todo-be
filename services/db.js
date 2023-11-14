@@ -25,11 +25,12 @@ conn.query(
   'added_my_day TINYINT(1) NOT NULL, ' +
   'marked_as_important TINYINT(1) NOT NULL, ' +
   'marked_as_completed TINYINT(1) NOT NULL, ' +
+  'reminder DATETIME, ' +
   'due_date Date, ' +
   'note VARCHAR(512), ' +
   'category INT(10), ' +
-  '`create_time` datetime DEFAULT CURRENT_TIMESTAMP, ' +
-  '`update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ' +
+  '`create_time` DATETIME DEFAULT CURRENT_TIMESTAMP, ' +
+  '`update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ' +
   'PRIMARY KEY(id))',
 );
 
@@ -40,8 +41,8 @@ conn.query(
   'content VARCHAR(512) NOT NULL, ' +
   'todo_id VARCHAR(40) NOT NULL, ' +
   'marked_as_completed TINYINT(1) NOT NULL, ' +
-  '`create_time` datetime DEFAULT CURRENT_TIMESTAMP, ' +
-  '`update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ' +
+  '`create_time` DATETIME DEFAULT CURRENT_TIMESTAMP, ' +
+  '`update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ' +
   'PRIMARY KEY(id))',
 );
 
@@ -50,8 +51,8 @@ conn.query(
   'CREATE TABLE IF NOT EXISTS list (' +
   'id INT UNSIGNED NOT NULL AUTO_INCREMENT, ' +
   'name VARCHAR(512) NOT NULL, ' +
-  '`create_time` datetime DEFAULT CURRENT_TIMESTAMP, ' +
-  '`update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ' +
+  '`create_time` DATETIME DEFAULT CURRENT_TIMESTAMP, ' +
+  '`update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ' +
   'PRIMARY KEY(id))',
 );
 

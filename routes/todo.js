@@ -11,9 +11,9 @@ router.post('/get_list_by_id', todo.getTodoById);
 
 router.post('/add', todo.addTodo);
 
-router.post('/delete', todo.deleteTodo);
+router.post('/delete', todo.deleteTodo.bind(todo));
 
-router.post('/update', todo.updateTodo);
+router.post('/update', todo.updateTodo.bind(todo));
 
 router.get('/export', todo.exportFile);
 
