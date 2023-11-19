@@ -29,7 +29,7 @@ conn.query(
   'due_date Date, ' +
   'repeated TINYINT(1) NOT NULL, ' +
   'note VARCHAR(512), ' +
-  'category INT(10), ' +
+  'category VARCHAR(100), ' +
   '`create_time` DATETIME DEFAULT CURRENT_TIMESTAMP, ' +
   '`update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ' +
   'PRIMARY KEY(id))',
