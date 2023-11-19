@@ -27,6 +27,7 @@ conn.query(
   'marked_as_completed TINYINT(1) NOT NULL, ' +
   'reminder DATETIME, ' +
   'due_date Date, ' +
+  'repeated TINYINT(1) NOT NULL, ' +
   'note VARCHAR(512), ' +
   'category INT(10), ' +
   '`create_time` DATETIME DEFAULT CURRENT_TIMESTAMP, ' +
