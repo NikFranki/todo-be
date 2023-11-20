@@ -25,8 +25,9 @@ const tokenValidateRouter = require('./routes/token-validate');
 
 const app = express();
 
-app.set('serverPath', 'http://localhost:8000/images/');
+app.set('serverPath', 'http://localhost:8000/');
 app.set('imagesPath', path.join(__dirname, '/public/images/'));
+app.set('todoAttachmentsFilePath', path.join(__dirname, '/public/todo-attachment/'));
 app.set('xlsxsPath', path.join(__dirname, '/storage/inputs/xlsxs/'));
 
 app.use(session({

@@ -28,6 +28,7 @@ conn.query(
   'reminder DATETIME, ' +
   'due_date Date, ' +
   'repeated TINYINT(1) NOT NULL, ' +
+  'file VARCHAR(512), ' +
   'note VARCHAR(1000), ' +
   'category VARCHAR(100), ' +
   '`create_time` DATETIME DEFAULT CURRENT_TIMESTAMP, ' +
