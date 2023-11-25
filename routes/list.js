@@ -12,5 +12,7 @@ router.post('/delete', list.deleteList);
 
 router.post('/update', list.updateList);
 
+router.post('/update-by-drag-and-drop', list.updateListByDragAndDrop);
+
 module.exports = router;
 
