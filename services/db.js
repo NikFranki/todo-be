@@ -21,6 +21,7 @@ conn.query(
   'CREATE TABLE IF NOT EXISTS todo (' +
   'id VARCHAR(40) NOT NULL, ' +
   'content VARCHAR(512) NOT NULL, ' +
+  'user_id VARCHAR(60) NOT NULL, ' +
   'list_id INT NOT NULL, ' +
   'added_my_day TINYINT(1) NOT NULL, ' +
   'marked_as_important TINYINT(1) NOT NULL, ' +
@@ -52,7 +53,8 @@ conn.query(
 conn.query(
   'CREATE TABLE IF NOT EXISTS list (' +
   'id INT UNSIGNED NOT NULL AUTO_INCREMENT, ' +
-  'name VARCHAR(512) NOT NULL, ' +
+  'index_order INT NOT NULL, ' +
+  'user_id VARCHAR(60) NOT NULL, ' +
   '`create_time` DATETIME DEFAULT CURRENT_TIMESTAMP, ' +
   '`update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ' +
   'PRIMARY KEY(id))',
