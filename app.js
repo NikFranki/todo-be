@@ -21,7 +21,6 @@ const subtaskRouter = require('./routes/subtask');
 const userRouter = require('./routes/user');
 const emailRouter = require('./routes/email');
 const listRouter = require('./routes/list');
-const tokenValidateRouter = require('./routes/token-validate');
 
 const app = express();
 
@@ -77,7 +76,6 @@ app.use('/subtask', subtaskRouter);
 app.use('/user', userRouter);
 app.use('/email', emailRouter);
 app.use('/list', listRouter);
-app.use('/jwt', tokenValidateRouter);
 
 app.use(notfound);
 app.use(error);
