@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-const isProd = process.argv[2] === 'prod';
+const isProd = process.env.NODE_ENV === 'PROD';
 
 const conn = mysql.createConnection({
   host: process.env[isProd ? 'DB_HOST_PROD' : 'DB_HOST'],

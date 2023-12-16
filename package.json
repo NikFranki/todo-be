@@ -3,10 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node index dev",
-    "prod": "node index prod",
-    "debug": "npx nodemon --inspect index dev",
-    "debug-prod": "npx nodemon --inspect index prod"
+    "start": "node index",
+    "debug": "npx nodemon --inspect index"
   },
   "dependencies": {
     "@vercel/node": "^3.0.7",
