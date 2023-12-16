@@ -47,7 +47,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-const allowedOrigins = ['http://localhost:3366', 'http://franki.com', 'http://franki.com:3366'];
+const allowedOrigins = ['http://localhost:3366', 'https://todo-fe-six.vercel.app'];
 app.use(cors({
   origin: allowedOrigins,
   credentials: true,
@@ -58,7 +58,6 @@ app.use(rmUnusedImages);
 
 // auth verrify
 const WHITELIST_URLs = [
-  '/jwt/tokenValidate',
   '/user/register',
   '/user/login',
   '/user/logout',
