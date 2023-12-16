@@ -9,9 +9,6 @@ const session = require('express-session');
 
 dotenv.config();
 
-const notfound = require('./lib/middleware/notfound');
-const error = require('./lib/middleware/error');
-
 const rmUnusedImages = require('./lib/middleware/rm_unused_images');
 
 const authVerify = require('./lib/middleware/authVerify');
@@ -76,9 +73,6 @@ app.use('/user', userRouter);
 app.use('/email', emailRouter);
 app.use('/list', listRouter);
 
-app.use(notfound);
-app.use(error);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -86,11 +80,6 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
   res.send(err.message);
 });
