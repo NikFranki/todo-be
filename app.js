@@ -77,6 +77,8 @@ app.use('/user', userRouter);
 app.use('/email', emailRouter);
 app.use('/list', listRouter);
 
+console.log(process.argv);
+
 app.use(notfound);
 app.use(error);
 

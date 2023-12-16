@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node index dev",
-    "build": "node index prod",
-    "debug": "npx nodemon --inspect index dev"
+    "prod": "node index prod",
+    "debug": "npx nodemon --inspect index dev",
+    "debug-prod": "npx nodemon --inspect index prod"
   },
   "dependencies": {
     "@vercel/node": "^3.0.7",

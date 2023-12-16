@@ -1,10 +1,12 @@
 const mysql = require('mysql');
 
+const isProd = process.argv[2] === 'prod';
+
 const conn = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: process.env[isProd ? 'DB_HOST_PROD' : 'DB_HOST'],
+  user: process.env[isProd ? 'DB_USER_PROD' : 'DB_USER'],
+  password: process.env[isProd ? 'DB_PASSWORD_PROD' : 'DB_PASSWORD'],
+  database: process.env[isProd ? 'DB_NAME_PROD' : 'DB_NAME'],
 });
 
 /* table user */
@@ -53,6 +55,7 @@ conn.query(
 conn.query(
   'CREATE TABLE IF NOT EXISTS list (' +
   'id INT UNSIGNED NOT NULL AUTO_INCREMENT, ' +
+  'name VARCHAR(512) NOT NULL, ' +
   'index_order INT NOT NULL, ' +
   'user_id VARCHAR(60) NOT NULL, ' +
   '`create_time` DATETIME DEFAULT CURRENT_TIMESTAMP, ' +
