@@ -1,90 +1,100 @@
-/**
- * Module dependencies.
- */
+const createError = require('http-errors');
+const express = require('express');
+const dotenv = require('dotenv');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors');
+const session = require('express-session');
 
-var app = require('./app');
-var debug = require('debug')('todolist:server');
-var http = require('http');
+dotenv.config();
 
-/**
- * Get port from environment and store in Express.
- */
+const notfound = require('./lib/middleware/notfound');
+const error = require('./lib/middleware/error');
 
-var port = normalizePort(process.env.PORT || process.argv[2] || '8000');
-app.set('port', port);
+const rmUnusedImages = require('./lib/middleware/rm_unused_images');
 
-/**
- * Create HTTP server.
- */
+const authVerify = require('./lib/middleware/authVerify');
 
-var server = http.createServer(app);
+const todoRouter = require('./routes/todo');
+const subtaskRouter = require('./routes/subtask');
+const userRouter = require('./routes/user');
+const emailRouter = require('./routes/email');
+const listRouter = require('./routes/list');
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+const app = express();
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+app.set('serverPath', 'http://localhost:8000/');
+app.set('imagesPath', path.join(__dirname, '/public/images/'));
+app.set('todoAttachmentFilePath', path.join(__dirname, '/public/todo-attachment/'));
+app.set('xlsxsPath', path.join(__dirname, '/storage/inputs/xlsxs/'));
 
-/**
- * Normalize a port into a number, string, or false.
- */
+app.use(session({
+  secret: "keyboard cat",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 365 * 24 * 60 * 60 * 1000,
+    secure: false,
+    httpOnly: true,
+    sameSite: 'strict',
+  },
+  rolling: true,
+}));
 
-function normalizePort(val) {
-  var port = parseInt(val, 10);
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+const allowedOrigins = ['http://localhost:3366', 'http://franki.com', 'http://franki.com:3366'];
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
+// rm unused images in public folder
+app.use(rmUnusedImages);
+
+// auth verrify
+const WHITELIST_URLs = [
+  '/jwt/tokenValidate',
+  '/user/register',
+  '/user/login',
+  '/user/logout',
+];
+app.use('*', (req, res, next) => {
+  if (WHITELIST_URLs.includes(req.originalUrl)) {
+    next();
+  } else {
+    authVerify.validateToken(req, res, next);
   }
+});
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+app.use('/todo', todoRouter);
+app.use('/subtask', subtaskRouter);
+app.use('/user', userRouter);
+app.use('/email', emailRouter);
+app.use('/list', listRouter);
 
-  return false;
-}
+app.use(notfound);
+app.use(error);
 
-/**
- * Event listener for HTTP server "error" event.
- */
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
 
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  // render the error page
+  res.status(err.status || 500);
+  res.send('error');
+});
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
-
-module.exports = server;
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => console.log(`Server is running in port ${PORT}`));
