@@ -22,9 +22,14 @@ const listRouter = require('./routes/list');
 const app = express();
 
 app.set('serverPath', 'http://localhost:8000/');
-app.set('imagesPath', path.join(__dirname, '/public/images/'));
-app.set('todoAttachmentFilePath', path.join(__dirname, '/public/todo-attachment/'));
-app.set('xlsxsPath', path.join(__dirname, '/storage/inputs/xlsxs/'));
+// app.set('imagesPath', path.join(__dirname, '/public/images/'));
+// app.set('todoAttachmentFilePath', path.join(__dirname, '/public/todo-attachment/'));
+// app.set('xlsxsPath', path.join(__dirname, '/storage/inputs/xlsxs/'));
+
+// fix vercel deploy error: ENOENT: no such file or directory, stat '/var/task/public/images/'
+app.set('imagesPath', path.join(process.cwd(), '/public/images/'));
+app.set('todoAttachmentFilePath', path.join(process.cwd(), '/public/todo-attachment/'));
+app.set('xlsxsPath', path.join(process.cwd(), '/storage/inputs/xlsxs/'));
 
 app.use(session({
   secret: "keyboard cat",
