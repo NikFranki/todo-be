@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { Todo, upload, todoAttachmentsUpload } = require('../lib/todo');
 
-const todo = new Todo({});
+const todo = new Todo();
 
 router.post('/list', todo.getList.bind(todo));
 

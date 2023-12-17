@@ -13,6 +13,22 @@ const logger = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
 
+const app = express();
+
+const server = http.createServer(app);
+
+const socketIO = require('socket.io');
+const socketAllowedOrigins = ['http://localhost:3366', 'https://todo-fe-six.vercel.app'];
+const io = socketIO(
+  server,
+  {
+    cors: {
+      origin: socketAllowedOrigins,
+    }
+  }
+);
+global.io = io;
+
 dotenv.config();
 
 // const rmUnusedImages = require('./lib/middleware/rm_unused_images');
@@ -24,8 +40,6 @@ const subtaskRouter = require('./routes/subtask');
 const userRouter = require('./routes/user');
 const emailRouter = require('./routes/email');
 const listRouter = require('./routes/list');
-
-const app = express();
 
 app.set('serverPath', process.env.NODE_ENV === 'PROD' ? 'https://todo-be-psi.vercel.app/' : 'http://localhost:8000/');
 app.set('imagesPath', path.join(__dirname, '/public/images/'));
@@ -91,6 +105,4 @@ app.use(function(err, req, res, next) {
 });
 
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => console.log(`Server is running in port ${PORT}`));
-
-
+server.listen(PORT, () => console.log(`Server is running in port ${PORT}`));
