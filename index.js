@@ -9,7 +9,7 @@ const session = require('express-session');
 
 dotenv.config();
 
-const rmUnusedImages = require('./lib/middleware/rm_unused_images');
+// const rmUnusedImages = require('./lib/middleware/rm_unused_images');
 
 const authVerify = require('./lib/middleware/authVerify');
 
@@ -56,7 +56,7 @@ app.use(cors({
 }));
 
 // rm unused images in public folder
-app.use(rmUnusedImages);
+// app.use(rmUnusedImages);
 
 // auth verrify
 const WHITELIST_URLs = [
