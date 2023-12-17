@@ -1,3 +1,9 @@
+/**
+ * Module dependencies.
+ */
+const debug = require('debug')('todolist:server');
+const http = require('http');
+
 const createError = require('http-errors');
 const express = require('express');
 const dotenv = require('dotenv');
@@ -84,5 +90,7 @@ app.use(function(err, req, res, next) {
   res.send(err.message);
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Server is running in port ${PORT}`));
+
+
